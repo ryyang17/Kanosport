@@ -12,7 +12,7 @@ const faqs: { question: string; answer: string }[] = [
   {
     question: "Heb ik ervaring nodig om met de kanosport te beginnen?",
     answer:
-      "Nee, voor alle drie de disciplines geldt dat beginners welkom zijn. De meeste verenigingen bieden introductietrainingen waarbij je onder begeleiding kennismaakt met de sport. Materiaal wordt vrijwel altijd door de vereniging verzorgd.",
+      "Nee, voor alle drie de sporten geldt dat beginners welkom zijn. De meeste verenigingen bieden introductietrainingen waarbij je onder begeleiding kennismaakt met de sport. Materiaal wordt vrijwel altijd door de vereniging verzorgd.",
   },
   {
     question: "Wat is het verschil tussen kanopolo, kanoslalom en kanosprint?",

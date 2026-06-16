@@ -3,18 +3,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Compass, HeartHandshake, Target } from "lucide-react";
 import PageHero from "@/components/PageHero";
+import PhotoCredit from "@/components/PhotoCredit";
+import { photos } from "@/data/photos";
 
 export const metadata: Metadata = {
   title: "Over ons",
   description:
-    "Over Watersport Community: het informatieplatform over kanopolo, kanoslalom en kanosprint.",
+    "Over Kanosport Community: het informatieplatform over kanopolo, kanoslalom en kanosprint.",
 };
 
 const values = [
   {
     icon: Compass,
     title: "Informeren",
-    text: "We bundelen heldere, toegankelijke informatie over de drie kanodisciplines op één plek.",
+    text: "We bundelen heldere, toegankelijke informatie over de drie kanosportsoorten op één plek.",
   },
   {
     icon: HeartHandshake,
@@ -33,7 +35,7 @@ export default function AboutPage() {
     <>
       <PageHero
         title="Over ons"
-        description="Watersport Community is hét informatieplatform over de kanodisciplines kanopolo, kanoslalom en kanosprint."
+        description="Kanosport Community is hét informatieplatform over de kanosportsoorten kanopolo, kanoslalom en kanosprint."
       />
       <div className="container-page py-12">
         <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -41,29 +43,30 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold text-brand-950">Wie we zijn</h2>
             <div className="prose-body mt-4">
               <p>
-                Watersport Community is opgericht om de kanosport in Nederland
+                Kanosport Community is opgericht om de kanosport in Nederland
                 zichtbaarder en toegankelijker te maken. Veel mensen weten niet
                 hoe leuk en veelzijdig kanovaren kan zijn — van het fanatieke
                 teamspel van kanopolo tot de precisie van kanoslalom en de pure
                 snelheid van kanosprint.
               </p>
               <p>
-                Op dit platform vind je uitleg over elke discipline, het laatste
+                Op dit platform vind je uitleg over elke sport, het laatste
                 nieuws, een overzicht van evenementen en een gids van
                 verenigingen door het hele land. Zo helpen we je op weg, of je nu
                 nieuwsgierig bent of al jaren peddelt.
               </p>
             </div>
           </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-brand-100">
+          <figure className="relative aspect-[4/3] overflow-hidden rounded-xl border border-brand-100">
             <Image
-              src="https://picsum.photos/seed/over-ons/1200/900"
-              alt="Kanovaarders op een rustig meer"
+              src={photos.slalomRace.src}
+              alt={photos.slalomRace.alt}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
-          </div>
+            <PhotoCredit photo={photos.slalomRace} overlay />
+          </figure>
         </div>
 
         <div className="mt-16">
@@ -89,7 +92,7 @@ export default function AboutPage() {
         <div className="mt-16 rounded-xl bg-brand-950 p-8 text-white sm:p-10">
           <h2 className="text-2xl font-bold">Doe mee</h2>
           <p className="mt-2 max-w-2xl text-brand-100">
-            Benieuwd geworden? Ontdek de disciplines, vind een vereniging of
+            Benieuwd geworden? Ontdek de sporten, vind een vereniging of
             neem contact met ons op. We helpen je graag op weg in de kanosport.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">

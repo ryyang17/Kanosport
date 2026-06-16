@@ -5,7 +5,7 @@ import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Neem contact op met Watersport Community via het formulier of onze contactgegevens.",
+  description: "Neem contact op met Kanosport Community via het formulier of onze contactgegevens.",
 };
 
 export default function ContactPage() {
@@ -23,7 +23,7 @@ export default function ContactPage() {
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-500" aria-hidden="true" />
                 <span>
-                  Watersport Community
+                  Kanosport Community
                   <br />
                   Waterkade 12
                   <br />

@@ -8,7 +8,7 @@ import ClubCard from "./ClubCard";
 type Filter = "alle" | Discipline;
 
 const filters: { value: Filter; label: string }[] = [
-  { value: "alle", label: "Alle disciplines" },
+  { value: "alle", label: "Alle sporten" },
   { value: "kanopolo", label: DISCIPLINE_LABELS.kanopolo },
   { value: "kanoslalom", label: DISCIPLINE_LABELS.kanoslalom },
   { value: "kanosprint", label: DISCIPLINE_LABELS.kanosprint },
@@ -54,7 +54,7 @@ export default function ClubList({ clubs }: { clubs: Vereniging[] }) {
 
         <div
           role="group"
-          aria-label="Filter op discipline"
+          aria-label="Filter op sport"
           className="flex flex-wrap gap-2"
         >
           {filters.map((f) => (

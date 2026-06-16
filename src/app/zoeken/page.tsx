@@ -7,7 +7,7 @@ import { countResults, search, type SearchResult } from "@/lib/search";
 
 export const metadata: Metadata = {
   title: "Zoeken",
-  description: "Doorzoek de hele site: disciplines, nieuws, evenementen en verenigingen.",
+  description: "Doorzoek de hele site: sporten, nieuws, evenementen en verenigingen.",
 };
 
 const groups: {
@@ -15,7 +15,7 @@ const groups: {
   label: string;
   icon: typeof Waves;
 }[] = [
-  { key: "discipline", label: "Disciplines", icon: Waves },
+  { key: "discipline", label: "Sporten", icon: Waves },
   { key: "nieuws", label: "Nieuws", icon: Newspaper },
   { key: "evenement", label: "Evenementen", icon: CalendarDays },
   { key: "vereniging", label: "Verenigingen", icon: Users },
@@ -51,7 +51,7 @@ export default async function SearchPage({
     <>
       <PageHero
         title="Zoeken"
-        description="Doorzoek disciplines, nieuws, evenementen en verenigingen."
+        description="Doorzoek sporten, nieuws, evenementen en verenigingen."
       />
       <div className="container-page py-12">
         <SearchBar className="max-w-xl" autoFocus initialQuery={query} />

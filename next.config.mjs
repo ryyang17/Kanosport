@@ -10,6 +10,16 @@ const nextConfig = {
         protocol: "https",
         hostname: "fastly.picsum.photos",
       },
+      {
+        // Echte, vrij gelicentieerde foto's (Wikimedia Commons)
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        // YouTube-videothumbnails
+        protocol: "https",
+        hostname: "i.ytimg.com",
+      },
     ],
   },
 };

@@ -5,8 +5,10 @@ import { news } from "@/data/news";
 import { events } from "@/data/events";
 import { disciplineList } from "@/data/disciplines";
 import { byDateAsc, byNewest, disciplineBadgeClasses } from "@/lib/utils";
+import { photos } from "@/data/photos";
 import NewsCard from "@/components/NewsCard";
 import EventCard from "@/components/EventCard";
+import PhotoCredit from "@/components/PhotoCredit";
 
 export default function HomePage() {
   const latestNews = byNewest(news).slice(0, 3);
@@ -17,13 +19,14 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-950 text-white">
         <Image
-          src="https://picsum.photos/seed/watersport-hero/1920/1080"
-          alt="Kanovaarders op het water"
+          src={photos.sprintPan.src}
+          alt={photos.sprintPan.alt}
           fill
           priority
           sizes="100vw"
           className="object-cover opacity-30"
         />
+        <PhotoCredit photo={photos.sprintPan} overlay />
         <div className="relative container-page py-20 sm:py-28">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-300">
@@ -33,8 +36,8 @@ export default function HomePage() {
               Ontdek de wereld van de kanosport
             </h1>
             <p className="mt-5 text-lg text-brand-100">
-              Welkom bij Watersport Community, hét informatieplatform over drie
-              fascinerende kanodisciplines. Of je nu wilt scoren in kanopolo,
+              Welkom bij Kanosport Community, hét informatieplatform over drie
+              fascinerende kanosportsoorten. Of je nu wilt scoren in kanopolo,
               precies door het wildwater wilt slalommen of vol gas wilt op de
               sprintbaan — ontdek hier alles over de sport, vind een vereniging
               bij jou in de buurt en blijf op de hoogte van het laatste nieuws.
@@ -44,7 +47,7 @@ export default function HomePage() {
                 href="/disciplines/kanopolo"
                 className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-brand-950"
               >
-                Verken de disciplines <ArrowRight className="h-4 w-4" />
+                Verken de sporten <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/verenigingen"
@@ -57,14 +60,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Disciplines */}
+      {/* Sporten */}
       <section className="container-page py-16">
         <div className="mb-8 max-w-2xl">
           <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
-            De drie disciplines
+            De drie sporten
           </h2>
           <p className="mt-2 text-brand-700">
-            Elke discipline heeft een eigen karakter. Klik door voor uitleg,
+            Elke sport heeft een eigen karakter. Klik door voor uitleg,
             regels, materiaal en meer.
           </p>
         </div>
@@ -77,8 +80,8 @@ export default function HomePage() {
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
-                  src={d.heroImage}
-                  alt={`${d.name} in actie`}
+                  src={d.heroImage.src}
+                  alt={d.heroImage.alt}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"

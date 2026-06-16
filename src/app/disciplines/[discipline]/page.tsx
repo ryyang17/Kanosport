@@ -12,6 +12,7 @@ import { byDateAsc, byNewest } from "@/lib/utils";
 import NewsCard from "@/components/NewsCard";
 import EventCard from "@/components/EventCard";
 import ClubCard from "@/components/ClubCard";
+import PhotoCredit from "@/components/PhotoCredit";
 
 type Params = { discipline: string };
 
@@ -65,13 +66,14 @@ export default async function DisciplinePage({
       {/* Hero met beeld */}
       <section className="relative overflow-hidden bg-brand-950 text-white">
         <Image
-          src={content.heroImage}
-          alt={`${content.name} in actie`}
+          src={content.heroImage.src}
+          alt={content.heroImage.alt}
           fill
           priority
           sizes="100vw"
           className="object-cover opacity-30"
         />
+        <PhotoCredit photo={content.heroImage} overlay />
         <div className="relative container-page py-20 sm:py-24">
           <p className="text-sm font-semibold uppercase tracking-wider text-brand-300">
             Discipline
@@ -111,15 +113,16 @@ export default async function DisciplinePage({
 
           {/* Beeld + zijbalk */}
           <aside className="lg:col-span-1">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-brand-100">
+            <figure className="relative aspect-[4/3] overflow-hidden rounded-xl border border-brand-100">
               <Image
-                src={content.galleryImage}
-                alt={`Sfeerbeeld van ${content.name}`}
+                src={content.galleryImage.src}
+                alt={content.galleryImage.alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 33vw"
                 className="object-cover"
               />
-            </div>
+              <PhotoCredit photo={content.galleryImage} overlay />
+            </figure>
             {relatedClubs.length > 0 && (
               <div className="mt-6 rounded-xl border border-brand-100 bg-brand-50 p-5">
                 <h2 className="text-base font-semibold text-brand-950">

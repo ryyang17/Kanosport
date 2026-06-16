@@ -4,7 +4,7 @@ import { Mail, MapPin, Phone, Waves } from "lucide-react";
 const footerNav: { heading: string; links: { href: string; label: string }[] }[] =
   [
     {
-      heading: "Disciplines",
+      heading: "Sporten",
       links: [
         { href: "/disciplines/kanopolo", label: "Kanopolo" },
         { href: "/disciplines/kanoslalom", label: "Kanoslalom" },
@@ -40,7 +40,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 text-white">
               <Waves className="h-7 w-7 text-brand-300" aria-hidden="true" />
               <span className="text-lg font-bold">
-                Watersport<span className="text-accent-400">Community</span>
+                Kanosport<span className="text-accent-400">Community</span>
               </span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-brand-200">
@@ -96,7 +96,7 @@ export default function Footer() {
 
         <div className="mt-10 border-t border-brand-800 pt-6 text-sm text-brand-300">
           <p>
-            © {new Date().getFullYear()} Watersport Community. Een prototype voor
+            © {new Date().getFullYear()} Kanosport Community. Een prototype voor
             demonstratiedoeleinden.
           </p>
         </div>

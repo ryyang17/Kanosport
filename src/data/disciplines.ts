@@ -1,4 +1,5 @@
 import type { Discipline, DisciplineContent } from "./types";
+import { photos } from "./photos";
 
 // Gestructureerde content per discipline. Eén bron voor de drie disciplinepagina's.
 export const disciplines: Record<Discipline, DisciplineContent> = {
@@ -8,8 +9,8 @@ export const disciplines: Record<Discipline, DisciplineContent> = {
     tagline: "Snelheid, balgevoel en teamspel op het water",
     intro:
       "Kanopolo is een dynamische balsport die wordt gespeeld in speciale, wendbare kano's. Twee teams van vijf spelers proberen de bal in het doel van de tegenstander te krijgen. Het is een snelle, fysieke sport waarin techniek, tactiek en samenspel samenkomen.",
-    heroImage: "https://picsum.photos/seed/discipline-kanopolo-hero/1600/900",
-    galleryImage: "https://picsum.photos/seed/discipline-kanopolo-gallery/1200/800",
+    heroImage: photos.poloAction,
+    galleryImage: photos.poloTeam,
     sections: [
       {
         heading: "Wat is kanopolo?",
@@ -47,8 +48,8 @@ export const disciplines: Record<Discipline, DisciplineContent> = {
     tagline: "Precisie en lef door wild stromend water",
     intro:
       "Kanoslalom is een technische wildwatersport waarbij peddelaars zo snel mogelijk een parcours van hangende poorten afleggen. Het draait om precisie, lichaamsbeheersing en het lezen van het water.",
-    heroImage: "https://picsum.photos/seed/discipline-kanoslalom-hero/1600/900",
-    galleryImage: "https://picsum.photos/seed/discipline-kanoslalom-gallery/1200/800",
+    heroImage: photos.slalomAthlete,
+    galleryImage: photos.slalomGates,
     sections: [
       {
         heading: "Wat is kanoslalom?",
@@ -86,8 +87,8 @@ export const disciplines: Record<Discipline, DisciplineContent> = {
     tagline: "Pure explosiviteit over vlak water",
     intro:
       "Kanosprint is de olympische snelheidsdiscipline waarin peddelaars over een recht, vlak parcours zo snel mogelijk de finish proberen te bereiken. Kracht, techniek en ritme bepalen het verschil.",
-    heroImage: "https://picsum.photos/seed/discipline-kanosprint-hero/1600/900",
-    galleryImage: "https://picsum.photos/seed/discipline-kanosprint-gallery/1200/800",
+    heroImage: photos.sprintK4,
+    galleryImage: photos.sprintPan,
     sections: [
       {
         heading: "Wat is kanosprint?",

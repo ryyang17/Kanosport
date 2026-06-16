@@ -37,11 +37,11 @@ export default function Header() {
           <Link
             href="/"
             className="flex shrink-0 items-center gap-2 text-brand-700"
-            aria-label="Watersport Community home"
+            aria-label="Kanosport Community home"
           >
             <Waves className="h-7 w-7 text-brand-500" aria-hidden="true" />
             <span className="text-lg font-bold tracking-tight">
-              Watersport<span className="text-accent-500">Community</span>
+              Kanosport<span className="text-accent-500">Community</span>
             </span>
           </Link>
 

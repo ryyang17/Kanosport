@@ -34,6 +34,15 @@ export interface Vereniging {
   disciplines: Discipline[];
 }
 
+// Een echte, vrij gelicentieerde afbeelding met bronvermelding (bv. Wikimedia Commons).
+export interface Photo {
+  src: string;
+  alt: string;
+  credit?: string; // maker, bv. "Antoine Lamielle"
+  license?: string; // bv. "CC BY-SA 4.0"
+  sourceUrl?: string; // link naar de bronpagina
+}
+
 export interface MediaItem {
   id: string;
   type: "foto" | "video";
@@ -41,6 +50,10 @@ export interface MediaItem {
   src: string; // foto: afbeeldings-URL, video: YouTube embed-URL
   thumbnail: string;
   discipline?: Discipline;
+  // Bronvermelding (verplicht bij CC-gelicentieerde foto's, optioneel bij video's).
+  credit?: string;
+  license?: string;
+  sourceUrl?: string;
 }
 
 // Gestructureerde content voor een disciplinepagina.
@@ -54,8 +67,8 @@ export interface DisciplineContent {
   name: string;
   tagline: string;
   intro: string;
-  heroImage: string;
-  galleryImage: string;
+  heroImage: Photo;
+  galleryImage: Photo;
   sections: DisciplineSection[];
 }
 

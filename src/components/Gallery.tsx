@@ -102,10 +102,31 @@ export default function Gallery({ items }: { items: MediaItem[] }) {
                 />
               </div>
             )}
-            <figcaption className="mt-3 flex items-center justify-center gap-3 text-center text-sm text-white">
-              {active.title}
-              {active.discipline && (
-                <DisciplineBadge discipline={active.discipline} />
+            <figcaption className="mt-3 text-center text-sm text-white">
+              <span className="flex items-center justify-center gap-3">
+                {active.title}
+                {active.discipline && (
+                  <DisciplineBadge discipline={active.discipline} />
+                )}
+              </span>
+              {(active.credit || active.license) && (
+                <span className="mt-1 block text-xs text-white/70">
+                  {active.type === "video" ? "Bron" : "Foto"}: {active.credit}
+                  {active.license ? ` · ${active.license}` : ""}
+                  {active.sourceUrl && (
+                    <>
+                      {" · "}
+                      <a
+                        href={active.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline hover:no-underline"
+                      >
+                        bron
+                      </a>
+                    </>
+                  )}
+                </span>
               )}
             </figcaption>
           </figure>
