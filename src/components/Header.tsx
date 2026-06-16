@@ -9,13 +9,13 @@ import SearchBar from "./SearchBar";
 // Hoofdmenu-items. Altijd zichtbaar (NFR1).
 const navItems = [
   { href: "/", label: "Home" },
+  { href: "/galerij", label: "Galerij" },
+  { href: "/nieuws", label: "Nieuws" },
   { href: "/disciplines/kanopolo", label: "Kanopolo" },
   { href: "/disciplines/kanoslalom", label: "Kanoslalom" },
   { href: "/disciplines/kanosprint", label: "Kanosprint" },
-  { href: "/nieuws", label: "Nieuws" },
   { href: "/evenementen", label: "Evenementen" },
   { href: "/verenigingen", label: "Verenigingen" },
-  { href: "/galerij", label: "Galerij" },
   { href: "/faq", label: "FAQ" },
   { href: "/over-ons", label: "Over ons" },
   { href: "/contact", label: "Contact" },

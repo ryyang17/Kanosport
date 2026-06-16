@@ -1,18 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CalendarDays, Newspaper, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, ExternalLink, Newspaper, Users } from "lucide-react";
 import { news } from "@/data/news";
 import { events } from "@/data/events";
 import { disciplineList } from "@/data/disciplines";
 import { byDateAsc, byNewest, disciplineBadgeClasses } from "@/lib/utils";
 import { photos } from "@/data/photos";
+import { fetchCanoeNews, type ExternalNews } from "@/lib/news-feed";
 import NewsCard from "@/components/NewsCard";
 import EventCard from "@/components/EventCard";
+import ExternalNewsCard from "@/components/ExternalNewsCard";
 import PhotoCredit from "@/components/PhotoCredit";
 
-export default function HomePage() {
+export default async function HomePage() {
   const latestNews = byNewest(news).slice(0, 3);
   const upcomingEvents = byDateAsc(events).slice(0, 3);
+
+  let internationalNews: ExternalNews[] = [];
+  try {
+    internationalNews = await fetchCanoeNews(3);
+  } catch {
+    // Feed niet beschikbaar — sectie weggelaten
+  }
 
   return (
     <>
@@ -132,6 +141,35 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Internationaal nieuws (ICF live feed) */}
+      {internationalNews.length > 0 && (
+        <section className="container-page py-16">
+          <div className="mb-8 flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
+                Internationaal nieuws
+              </h2>
+              <p className="mt-2 text-brand-700">
+                Actueel nieuws van de International Canoe Federation (ICF).
+              </p>
+            </div>
+            <a
+              href="https://www.canoeicf.com/news"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
+            >
+              Naar ICF <ExternalLink className="h-4 w-4" />
+            </a>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {internationalNews.map((article) => (
+              <ExternalNewsCard key={article.id} article={article} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Komende evenementen */}
       <section className="container-page py-16">
