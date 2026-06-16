@@ -77,6 +77,23 @@ Gedefinieerd in [`src/data/types.ts`](src/data/types.ts): `Discipline`, `NewsArt
 - **Galerij** — 8 media-items (foto's via picsum + YouTube-embed-placeholders) (`src/data/media.ts`)
 - **Disciplines** — gestructureerde content per discipline (`src/data/disciplines.ts`)
 
+## Live data & echte bronnen
+
+Naast de mock-data haalt het prototype op enkele plekken **echte, openbare data** op
+(server-side, met ISR-caching en automatische fallback naar de mock-data als een
+bron onbereikbaar is). Er zijn géén API-keys nodig.
+
+| Onderdeel | Bron | Implementatie |
+| --- | --- | --- |
+| **Video's & "live"** | Officieel ICF-kanaal *Planet Canoe* op YouTube, via de publieke RSS-feed (geen API-key) | `src/lib/youtube.ts`, `src/components/LiveSection.tsx`, `src/app/galerij/page.tsx` |
+| **Internationaal nieuws** | Nieuws-RSS van de International Canoe Federation (`canoeicf.com/rss.xml`) — kop + samenvatting + bronlink (link-stijl i.v.m. auteursrecht) | `src/lib/news-feed.ts`, `src/components/ExternalNewsCard.tsx`, `src/app/nieuws/page.tsx` |
+| **Foto's** | Wikimedia Commons — Creative Commons / publiek domein, mét verplichte bronvermelding | `src/data/photos.ts`, `src/components/PhotoCredit.tsx` |
+| **Evenementen** | Bewust ongewijzigd (mock-data) | `src/data/events.ts` |
+
+Feed-parsing gebeurt zonder externe libraries (`src/lib/feed-utils.ts`). Externe
+afbeeldingshosts staan in `next.config.mjs`. Alle CC-foto's tonen maker + licentie
+via de `PhotoCredit`-component, zoals de licenties vereisen.
+
 ## Waar zijn de requirements geïmplementeerd?
 
 ### Functionele requirements
