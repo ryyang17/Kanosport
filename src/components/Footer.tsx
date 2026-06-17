@@ -4,29 +4,18 @@ import { Mail, MapPin, Phone, Waves } from "lucide-react";
 const footerNav: { heading: string; links: { href: string; label: string }[] }[] =
   [
     {
-      heading: "Sporten",
-      links: [
-        { href: "/disciplines/kanopolo", label: "Kanopolo" },
-        { href: "/disciplines/kanoslalom", label: "Kanoslalom" },
-        { href: "/disciplines/kanosprint", label: "Kanosprint" },
-      ],
-    },
-    {
       heading: "Ontdekken",
       links: [
-        { href: "/nieuws", label: "Nieuws" },
-        { href: "/evenementen", label: "Evenementen" },
-        { href: "/verenigingen", label: "Verenigingen" },
-        { href: "/galerij", label: "Galerij" },
+        { href: "/", label: "Home" },
+        { href: "/wedstrijden", label: "Wedstrijden" },
+        { href: "/nieuws", label: "Nieuws & Blogs" },
       ],
     },
     {
-      heading: "Informatie",
+      heading: "Meedoen",
       links: [
-        { href: "/over-ons", label: "Over ons" },
-        { href: "/faq", label: "Veelgestelde vragen" },
+        { href: "/sponsors", label: "Sponsors" },
         { href: "/contact", label: "Contact" },
-        { href: "/zoeken", label: "Zoeken" },
       ],
     },
   ];
@@ -36,16 +25,16 @@ export default function Footer() {
     <footer className="mt-16 border-t border-brand-100 bg-brand-950 text-brand-100">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-          <div>
+          <div className="lg:col-span-2">
             <div className="flex items-center gap-2 text-white">
               <Waves className="h-7 w-7 text-brand-300" aria-hidden="true" />
               <span className="text-lg font-bold">
-                Kanosport<span className="text-accent-400">Community</span>
+                Kanopolo<span className="text-accent-400">Community</span>
               </span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-brand-200">
-              Het informatieplatform over kanopolo, kanoslalom en kanosprint in
-              Nederland.
+              Het informatieplatform over kanopolo in Nederland: wedstrijden,
+              nieuws, blogs en meer.
             </p>
             <address className="mt-4 space-y-2 text-sm not-italic text-brand-200">
               <p className="flex items-center gap-2">
@@ -55,10 +44,10 @@ export default function Footer() {
               <p className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-brand-300" aria-hidden="true" />
                 <a
-                  href="mailto:info@watersportcommunity.nl"
+                  href="mailto:info@kanopolocommunity.nl"
                   className="hover:text-white hover:underline"
                 >
-                  info@watersportcommunity.nl
+                  info@kanopolocommunity.nl
                 </a>
               </p>
               <p className="flex items-center gap-2">
@@ -96,7 +85,7 @@ export default function Footer() {
 
         <div className="mt-10 border-t border-brand-800 pt-6 text-sm text-brand-300">
           <p>
-            © {new Date().getFullYear()} Kanosport Community. Een prototype voor
+            © {new Date().getFullYear()} Kanopolo Community. Een prototype voor
             demonstratiedoeleinden.
           </p>
         </div>

@@ -1,7 +1,5 @@
 // Kleine helpers voor het verwerken van RSS/Atom-feeds (zonder externe libs).
 
-import type { Discipline } from "@/data/types";
-
 // Decodeer veelvoorkomende HTML-entiteiten naar leesbare tekst.
 export function decodeEntities(input: string): string {
   return input
@@ -16,8 +14,15 @@ export function decodeEntities(input: string): string {
 }
 
 // Verwijder HTML-tags en normaliseer witruimte → platte tekst.
+//
+// Belangrijk: feeds (zoals de ICF-RSS) bevatten vaak entity-encoded HTML in de
+// description, bv. "&lt;p&gt;tekst&lt;/p&gt;". Daarom decoderen we EERST de
+// entiteiten, strippen we DAARNA de tags, en decoderen we nog een keer (voor
+// dubbel-geëncodeerde tekens). Anders blijven zichtbare <p>-tags in de excerpt staan.
 export function stripHtml(input: string): string {
-  return decodeEntities(input.replace(/<[^>]*>/g, " "))
+  const decoded = decodeEntities(input); // &lt;p&gt; → <p>
+  const withoutTags = decoded.replace(/<[^>]*>/g, " "); // tags weg
+  return decodeEntities(withoutTags) // resterende entiteiten (bv. &amp;)
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -29,16 +34,6 @@ export function tag(block: string, name: string): string | undefined {
   const m = block.match(re);
   if (!m) return undefined;
   return m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1").trim();
-}
-
-// Herken de discipline op basis van trefwoorden in een titel/tekst.
-export function detectDiscipline(text: string): Discipline | undefined {
-  const t = text.toLowerCase();
-  if (t.includes("polo")) return "kanopolo";
-  if (t.includes("slalom") || t.includes("wildwater") || t.includes("wild water"))
-    return "kanoslalom";
-  if (t.includes("sprint") || t.includes("marathon")) return "kanosprint";
-  return undefined;
 }
 
 // Maak een korte samenvatting van een (mogelijk lange) tekst.

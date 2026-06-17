@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Play, X } from "lucide-react";
 import type { MediaItem } from "@/data/types";
-import DisciplineBadge from "./DisciplineBadge";
 
 export default function Gallery({ items }: { items: MediaItem[] }) {
   const [active, setActive] = useState<MediaItem | null>(null);
@@ -103,12 +102,7 @@ export default function Gallery({ items }: { items: MediaItem[] }) {
               </div>
             )}
             <figcaption className="mt-3 text-center text-sm text-white">
-              <span className="flex items-center justify-center gap-3">
-                {active.title}
-                {active.discipline && (
-                  <DisciplineBadge discipline={active.discipline} />
-                )}
-              </span>
+              <span className="block">{active.title}</span>
               {(active.credit || active.license) && (
                 <span className="mt-1 block text-xs text-white/70">
                   {active.type === "video" ? "Bron" : "Foto"}: {active.credit}
