@@ -1,17 +1,29 @@
 import type { MediaItem } from "./types";
 import { photos } from "./photos";
 
-// Galerij-basis: echte, vrij gelicentieerde foto's (Wikimedia Commons) met
-// bronvermelding. De video's worden tijdens runtime aangevuld/vervangen door de
-// live YouTube-feed (zie src/lib/youtube.ts); deze lijst dient ook als fallback.
-export const media: MediaItem[] = [
+// Een hulpfunctie voor echte YouTube-video's (kanopolo).
+const yt = (
+  id: string,
+  title: string,
+  credit = "kanopolo.nl"
+): MediaItem => ({
+  id: `yt-${id}`,
+  type: "video",
+  title,
+  src: `https://www.youtube-nocookie.com/embed/${id}`,
+  thumbnail: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+  credit,
+  sourceUrl: `https://www.youtube.com/watch?v=${id}`,
+});
+
+// Echte kanopolo-foto's (Wikimedia Commons, CC) met bronvermelding.
+export const photoMedia: MediaItem[] = [
   {
     id: "m1",
     type: "foto",
     title: "EK kanopolo in Poznań",
     src: photos.poloAction.src,
     thumbnail: photos.poloAction.src,
-    discipline: "kanopolo",
     credit: photos.poloAction.credit,
     license: photos.poloAction.license,
     sourceUrl: photos.poloAction.sourceUrl,
@@ -22,84 +34,24 @@ export const media: MediaItem[] = [
     title: "Kanopoloteam in actie",
     src: photos.poloTeam.src,
     thumbnail: photos.poloTeam.src,
-    discipline: "kanopolo",
     credit: photos.poloTeam.credit,
     license: photos.poloTeam.license,
     sourceUrl: photos.poloTeam.sourceUrl,
   },
-  {
-    id: "m3",
-    type: "foto",
-    title: "WK kanoslalom – door de poort",
-    src: photos.slalomAthlete.src,
-    thumbnail: photos.slalomAthlete.src,
-    discipline: "kanoslalom",
-    credit: photos.slalomAthlete.credit,
-    license: photos.slalomAthlete.license,
-    sourceUrl: photos.slalomAthlete.sourceUrl,
-  },
-  {
-    id: "m4",
-    type: "foto",
-    title: "Slalompoorten boven het wildwater",
-    src: photos.slalomGates.src,
-    thumbnail: photos.slalomGates.src,
-    discipline: "kanoslalom",
-    credit: photos.slalomGates.credit,
-    license: photos.slalomGates.license,
-    sourceUrl: photos.slalomGates.sourceUrl,
-  },
-  {
-    id: "m5",
-    type: "foto",
-    title: "Slalomvaarder op de Franse kampioenschappen",
-    src: photos.slalomRace.src,
-    thumbnail: photos.slalomRace.src,
-    discipline: "kanoslalom",
-    credit: photos.slalomRace.credit,
-    license: photos.slalomRace.license,
-    sourceUrl: photos.slalomRace.sourceUrl,
-  },
-  {
-    id: "m6",
-    type: "foto",
-    title: "K4 500 meter dames op het WK kanosprint",
-    src: photos.sprintK4.src,
-    thumbnail: photos.sprintK4.src,
-    discipline: "kanosprint",
-    credit: photos.sprintK4.credit,
-    license: photos.sprintK4.license,
-    sourceUrl: photos.sprintK4.sourceUrl,
-  },
-  {
-    id: "m7",
-    type: "foto",
-    title: "Sprintkajakker in volle vaart",
-    src: photos.sprintRace.src,
-    thumbnail: photos.sprintRace.src,
-    discipline: "kanosprint",
-    credit: photos.sprintRace.credit,
-    license: photos.sprintRace.license,
-    sourceUrl: photos.sprintRace.sourceUrl,
-  },
-  {
-    id: "m8",
-    type: "foto",
-    title: "Sprintkanoërs over vlak water",
-    src: photos.sprintPan.src,
-    thumbnail: photos.sprintPan.src,
-    discipline: "kanosprint",
-    credit: photos.sprintPan.credit,
-    license: photos.sprintPan.license,
-    sourceUrl: photos.sprintPan.sourceUrl,
-  },
-  // Fallback-video (wordt bij een werkende verbinding vervangen door de live
-  // YouTube-feed van het officiële ICF-kanaal "Planet Canoe").
-  {
-    id: "m9",
-    type: "video",
-    title: "Planet Canoe — officieel ICF-kanaal",
-    src: "https://www.youtube.com/embed/videoseries?list=UUVagCjubko2x50KpYhnLsCQ",
-    thumbnail: photos.slalomAthlete.src,
-  },
 ];
+
+// Echte kanopolo terugkijk-video's (gevonden via kanopolo.nl/filmpjes).
+// Gebruikt voor de "Terugkijken"-sectie op de Wedstrijden-pagina.
+export const watchBackVideos: MediaItem[] = [
+  yt("Eo007bXT5cI", "Highlights WK 2024"),
+  yt("4wvwTyJeCpE", "Aftermovie Amsterdam Open 2025"),
+  yt("EU3ErTzHNIc", "Voorbeschouwing World Games 2025 — Nederlandse Dames"),
+  yt("5_3e5Fx9BHE", "Sfeerimpressie NK kanopolo 2023"),
+  yt("8ZtALr5ZfnE", "WK 2016 — voorbereiding in Italië"),
+];
+
+// De uitgelichte highlight-video (om bezoekers te trekken).
+export const highlightVideo: MediaItem = watchBackVideos[0];
+
+// Alle media samen (fallback / algemeen gebruik).
+export const media: MediaItem[] = [...photoMedia, ...watchBackVideos];

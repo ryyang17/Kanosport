@@ -1,198 +1,169 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CalendarDays, ExternalLink, Newspaper, Users } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  HeartHandshake,
+  Newspaper,
+} from "lucide-react";
 import { news } from "@/data/news";
-import { events } from "@/data/events";
-import { disciplineList } from "@/data/disciplines";
-import { byDateAsc, byNewest, disciplineBadgeClasses } from "@/lib/utils";
-import { photos } from "@/data/photos";
-import { fetchCanoeNews, type ExternalNews } from "@/lib/news-feed";
+import { competitions } from "@/data/competitions";
+import { kanopolo } from "@/data/kanopolo";
+import { highlightVideo } from "@/data/media";
+import type { Competition } from "@/data/types";
+import { byNewest } from "@/lib/utils";
 import NewsCard from "@/components/NewsCard";
-import EventCard from "@/components/EventCard";
-import ExternalNewsCard from "@/components/ExternalNewsCard";
+import CompetitionCard from "@/components/CompetitionCard";
+import YouTubeHighlight from "@/components/YouTubeHighlight";
 import PhotoCredit from "@/components/PhotoCredit";
 
-export default async function HomePage() {
-  const latestNews = byNewest(news).slice(0, 3);
-  const upcomingEvents = byDateAsc(events).slice(0, 3);
+function nextCompetition(): Competition | null {
+  const upcoming = competitions
+    .filter((c) => c.status !== "afgelopen")
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  return upcoming[0] ?? null;
+}
 
-  let internationalNews: ExternalNews[] = [];
-  try {
-    internationalNews = await fetchCanoeNews(3);
-  } catch {
-    // Feed niet beschikbaar — sectie weggelaten
-  }
+export default function HomePage() {
+  const latestNews = byNewest(news).slice(0, 3);
+  const volgende = nextCompetition();
+  // De korte "wat is kanopolo"-samenvatting (eerste twee secties).
+  const summary = kanopolo.sections.slice(0, 2);
 
   return (
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-brand-950 text-white">
         <Image
-          src={photos.sprintPan.src}
-          alt={photos.sprintPan.alt}
+          src={kanopolo.heroImage.src}
+          alt={kanopolo.heroImage.alt}
           fill
           priority
           sizes="100vw"
           className="object-cover opacity-30"
         />
-        <PhotoCredit photo={photos.sprintPan} overlay />
+        <PhotoCredit photo={kanopolo.heroImage} overlay />
         <div className="relative container-page py-20 sm:py-28">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-wider text-brand-300">
-              Kanopolo · Kanoslalom · Kanosprint
+              Hét platform over kanopolo
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-              Ontdek de wereld van de kanosport
+              Kanopolo: snelheid, balgevoel en teamspel op het water
             </h1>
             <p className="mt-5 text-lg text-brand-100">
-              Welkom bij Kanosport Community, hét informatieplatform over drie
-              fascinerende kanosportsoorten. Of je nu wilt scoren in kanopolo,
-              precies door het wildwater wilt slalommen of vol gas wilt op de
-              sprintbaan — ontdek hier alles over de sport, vind een vereniging
-              bij jou in de buurt en blijf op de hoogte van het laatste nieuws.
+              Welkom bij Kanopolo Community. Volg de wedstrijden, kijk live of
+              terug, lees het laatste nieuws en de blogs, en ontdek hoe je de
+              sport kunt steunen.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/disciplines/kanopolo"
+                href="/wedstrijden"
                 className="inline-flex items-center gap-2 rounded-full bg-accent-500 px-6 py-3 text-sm font-semibold text-white hover:bg-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-brand-950"
               >
-                Verken de sporten <ArrowRight className="h-4 w-4" />
+                Bekijk wedstrijden <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
-                href="/verenigingen"
+                href="/nieuws"
                 className="inline-flex items-center gap-2 rounded-full bg-white/10 px-6 py-3 text-sm font-semibold text-white ring-1 ring-inset ring-white/30 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white"
               >
-                Vind een vereniging
+                Nieuws & blogs
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Sporten */}
+      {/* Algemene samenvatting van kanopolo */}
       <section className="container-page py-16">
-        <div className="mb-8 max-w-2xl">
-          <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
-            De drie sporten
-          </h2>
-          <p className="mt-2 text-brand-700">
-            Elke sport heeft een eigen karakter. Klik door voor uitleg,
-            regels, materiaal en meer.
-          </p>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {disciplineList.map((d) => (
-            <Link
-              key={d.slug}
-              href={`/disciplines/${d.slug}`}
-              className="group flex flex-col overflow-hidden rounded-xl border border-brand-100 bg-white shadow-sm transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
-                  src={d.heroImage.src}
-                  alt={d.heroImage.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <span
-                  className={`mb-2 inline-flex w-fit items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${disciplineBadgeClasses[d.slug]}`}
-                >
-                  {d.name}
-                </span>
-                <h3 className="text-lg font-semibold text-brand-950">
-                  {d.tagline}
-                </h3>
-                <p className="mt-2 flex-1 text-sm text-brand-700">{d.intro}</p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-600 group-hover:text-accent-700">
-                  Meer over {d.name} <ArrowRight className="h-4 w-4" />
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className="grid items-start gap-10 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
+              Wat is kanopolo?
+            </h2>
+            <p className="mt-3 text-lg leading-relaxed text-brand-800">
+              {kanopolo.intro}
+            </p>
+            <div className="mt-6 space-y-6">
+              {summary.map((section) => (
+                <div key={section.heading}>
+                  <h3 className="text-lg font-semibold text-brand-950">
+                    {section.heading}
+                  </h3>
+                  <div className="prose-body mt-2">
+                    {section.paragraphs.map((p, i) => (
+                      <p key={i}>{p}</p>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <figure className="relative aspect-[4/3] overflow-hidden rounded-xl border border-brand-100">
+            <Image
+              src={kanopolo.galleryImage.src}
+              alt={kanopolo.galleryImage.alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 33vw"
+              className="object-cover"
+            />
+            <PhotoCredit photo={kanopolo.galleryImage} overlay />
+          </figure>
         </div>
       </section>
 
-      {/* Laatste nieuws */}
+      {/* Uitgelichte YouTube-highlight */}
       <section className="bg-brand-50 py-16">
         <div className="container-page">
-          <div className="mb-8 flex items-end justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
-                Laatste nieuws
-              </h2>
-              <p className="mt-2 text-brand-700">
-                De drie nieuwste artikelen uit de kanosport.
-              </p>
-            </div>
-            <Link
-              href="/nieuws"
-              className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
-            >
-              Alle nieuws <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {latestNews.map((article) => (
-              <NewsCard key={article.id} article={article} />
-            ))}
-          </div>
+          <h2 className="mb-6 text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
+            Uitgelicht
+          </h2>
+          <YouTubeHighlight
+            video={highlightVideo}
+            title="Highlights"
+            subtitle="Proef de sfeer van internationale kanopolowedstrijden en raak geïnspireerd."
+          />
         </div>
       </section>
 
-      {/* Internationaal nieuws (ICF live feed) */}
-      {internationalNews.length > 0 && (
-        <section className="container-page py-16">
-          <div className="mb-8 flex items-end justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
-                Internationaal nieuws
-              </h2>
-              <p className="mt-2 text-brand-700">
-                Actueel nieuws van de International Canoe Federation (ICF).
-              </p>
-            </div>
-            <a
-              href="https://www.canoeicf.com/news"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
-            >
-              Naar ICF <ExternalLink className="h-4 w-4" />
-            </a>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {internationalNews.map((article) => (
-              <ExternalNewsCard key={article.id} article={article} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Komende evenementen */}
+      {/* Eerstvolgende wedstrijd + laatste nieuws */}
       <section className="container-page py-16">
-        <div className="mb-8 flex items-end justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
-              Komende evenementen
-            </h2>
-            <p className="mt-2 text-brand-700">
-              De eerstvolgende wedstrijden, clinics en demonstraties.
-            </p>
+        <div className="grid gap-10 lg:grid-cols-3">
+          {volgende && (
+            <div className="lg:col-span-1">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <h2 className="text-2xl font-bold tracking-tight text-brand-950">
+                  Eerstvolgende wedstrijd
+                </h2>
+              </div>
+              <CompetitionCard competition={volgende} />
+              <Link
+                href="/wedstrijden"
+                className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900"
+              >
+                Volledig schema <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          )}
+
+          <div className={volgende ? "lg:col-span-2" : "lg:col-span-3"}>
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <h2 className="text-2xl font-bold tracking-tight text-brand-950">
+                Laatste nieuws
+              </h2>
+              <Link
+                href="/nieuws"
+                className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
+              >
+                Alle nieuws & blogs <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2">
+              {latestNews.map((article) => (
+                <NewsCard key={article.id} article={article} />
+              ))}
+            </div>
           </div>
-          <Link
-            href="/evenementen"
-            className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
-          >
-            Alle evenementen <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {upcomingEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
         </div>
       </section>
 
@@ -205,22 +176,22 @@ export default async function HomePage() {
           <div className="grid gap-6 sm:grid-cols-3">
             {[
               {
+                href: "/wedstrijden",
+                icon: CalendarDays,
+                title: "Wedstrijden",
+                text: "Schema, live stream en terugkijken.",
+              },
+              {
                 href: "/nieuws",
                 icon: Newspaper,
-                title: "Nieuws",
-                text: "Het laatste uit de kanowereld.",
+                title: "Nieuws & Blogs",
+                text: "Het laatste nieuws en handige blogs.",
               },
               {
-                href: "/evenementen",
-                icon: CalendarDays,
-                title: "Evenementen",
-                text: "Wedstrijden, clinics en demo's.",
-              },
-              {
-                href: "/verenigingen",
-                icon: Users,
-                title: "Verenigingen",
-                text: "Vind een club bij jou in de buurt.",
+                href: "/sponsors",
+                icon: HeartHandshake,
+                title: "Sponsors",
+                text: "Steun de kanosport of adverteer.",
               },
             ].map(({ href, icon: Icon, title, text }) => (
               <Link

@@ -1,6 +1,20 @@
-// Gedeelde datamodellen voor de hele site.
+// Gedeelde datamodellen voor de hele site (kanopolo-only).
 
-export type Discipline = "kanopolo" | "kanoslalom" | "kanosprint";
+// ---- Nieuws ----
+export type NewsCategory =
+  | "wedstrijden"
+  | "oranje"
+  | "verenigingen"
+  | "veiligheid"
+  | "internationaal";
+
+export const NEWS_CATEGORY_LABELS: Record<NewsCategory, string> = {
+  wedstrijden: "Wedstrijden",
+  oranje: "Oranje",
+  verenigingen: "Verenigingen",
+  veiligheid: "Veiligheid",
+  internationaal: "Internationaal",
+};
 
 export interface NewsArticle {
   id: string;
@@ -10,35 +24,72 @@ export interface NewsArticle {
   body: string;
   publishedAt: string; // ISO-datum
   imageUrl: string;
-  discipline?: Discipline;
+  category: NewsCategory;
 }
 
-export interface KanoEvent {
+// ---- Blogs ----
+export type BlogCategory = "materiaal" | "techniek" | "achtergrond" | "reviews";
+
+export const BLOG_CATEGORY_LABELS: Record<BlogCategory, string> = {
+  materiaal: "Materiaal",
+  techniek: "Techniek",
+  achtergrond: "Achtergrond",
+  reviews: "Reviews",
+};
+
+// Een product in een affiliate-lijst (bv. "top 10 beste peddels" via bol.com).
+export interface AffiliateProduct {
+  rank: number;
+  name: string;
+  blurb: string;
+  price?: string;
+  url: string; // bol.com-partnerlink (placeholder partner-tag)
+}
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  body: string;
+  publishedAt: string; // ISO-datum
+  imageUrl: string;
+  author: string;
+  category: BlogCategory;
+  // Affiliate-posts tonen een productlijst met partnerlinks + disclosure.
+  affiliate?: boolean;
+  products?: AffiliateProduct[];
+}
+
+// ---- Wedstrijden ----
+export type CompetitionLevel = "WK" | "EK" | "NK" | "toernooi";
+export type CompetitionStatus = "aankomend" | "live" | "afgelopen";
+
+export const COMPETITION_LEVEL_LABELS: Record<CompetitionLevel, string> = {
+  WK: "Wereldkampioenschap",
+  EK: "Europees kampioenschap",
+  NK: "Nederlands kampioenschap",
+  toernooi: "Toernooi",
+};
+
+export interface Competition {
   id: string;
   title: string;
-  type: "wedstrijd" | "demonstratie" | "clinic";
+  level: CompetitionLevel;
   date: string; // ISO-datum (YYYY-MM-DD)
-  time: string; // HH:MM
   location: string;
+  status: CompetitionStatus;
   description: string;
-  discipline?: Discipline;
+  infoUrl?: string; // meer informatie (bv. kanopolo.nl)
+  watchBackUrl?: string; // terugkijken (YouTube), leeg = nog niet beschikbaar
 }
 
-export interface Vereniging {
-  id: string;
-  name: string;
-  city: string;
-  email: string;
-  phone: string;
-  website?: string;
-  disciplines: Discipline[];
-}
-
+// ---- Media (foto's + video's) ----
 // Een echte, vrij gelicentieerde afbeelding met bronvermelding (bv. Wikimedia Commons).
 export interface Photo {
   src: string;
   alt: string;
-  credit?: string; // maker, bv. "Antoine Lamielle"
+  credit?: string; // maker, bv. "MOs810"
   license?: string; // bv. "CC BY-SA 4.0"
   sourceUrl?: string; // link naar de bronpagina
 }
@@ -49,32 +100,8 @@ export interface MediaItem {
   title: string;
   src: string; // foto: afbeeldings-URL, video: YouTube embed-URL
   thumbnail: string;
-  discipline?: Discipline;
   // Bronvermelding (verplicht bij CC-gelicentieerde foto's, optioneel bij video's).
   credit?: string;
   license?: string;
   sourceUrl?: string;
 }
-
-// Gestructureerde content voor een disciplinepagina.
-export interface DisciplineSection {
-  heading: string;
-  paragraphs: string[];
-}
-
-export interface DisciplineContent {
-  slug: Discipline;
-  name: string;
-  tagline: string;
-  intro: string;
-  heroImage: Photo;
-  galleryImage: Photo;
-  sections: DisciplineSection[];
-}
-
-// Hulplabels voor weergave van disciplines in de UI.
-export const DISCIPLINE_LABELS: Record<Discipline, string> = {
-  kanopolo: "Kanopolo",
-  kanoslalom: "Kanoslalom",
-  kanosprint: "Kanosprint",
-};

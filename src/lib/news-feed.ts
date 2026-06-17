@@ -1,5 +1,4 @@
-import type { Discipline } from "@/data/types";
-import { detectDiscipline, excerpt, tag } from "./feed-utils";
+import { excerpt, tag } from "./feed-utils";
 
 // Officiële nieuws-RSS van de International Canoe Federation (ICF).
 const ICF_NEWS_FEED = "https://www.canoeicf.com/rss.xml";
@@ -10,7 +9,6 @@ export interface ExternalNews {
   excerpt: string;
   url: string; // externe bronlink (we tonen kop + samenvatting, geen volledige tekst)
   publishedAt: string; // ISO-datum
-  discipline?: Discipline;
   source: string;
 }
 
@@ -48,7 +46,6 @@ export async function fetchCanoeNews(limit = 6): Promise<ExternalNews[]> {
       excerpt: excerpt(description, 200),
       url: link,
       publishedAt: iso,
-      discipline: detectDiscipline(title),
       source: "International Canoe Federation",
     });
 

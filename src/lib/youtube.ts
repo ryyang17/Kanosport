@@ -1,5 +1,5 @@
 import type { MediaItem } from "@/data/types";
-import { decodeEntities, detectDiscipline, tag } from "./feed-utils";
+import { decodeEntities, tag } from "./feed-utils";
 
 // Officieel YouTube-kanaal van de International Canoe Federation (ICF): "Planet Canoe".
 // We gebruiken de publieke RSS-feed van het kanaal — dat vereist géén API-key.
@@ -39,7 +39,6 @@ export async function fetchYouTubeVideos(limit = 8): Promise<MediaItem[]> {
       title,
       src: `https://www.youtube-nocookie.com/embed/${videoId}`,
       thumbnail: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-      discipline: detectDiscipline(title),
       credit: "Planet Canoe (ICF)",
       sourceUrl: `https://www.youtube.com/watch?v=${videoId}`,
     });

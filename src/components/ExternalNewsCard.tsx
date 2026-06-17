@@ -1,22 +1,18 @@
 import { ExternalLink } from "lucide-react";
 import type { ExternalNews } from "@/lib/news-feed";
 import { formatDate } from "@/lib/utils";
-import DisciplineBadge from "./DisciplineBadge";
 
 // Kaart voor echt, extern nieuws: kop + korte samenvatting + bronlink.
 // We tonen bewust niet de volledige tekst (auteursrecht) maar linken door.
 export default function ExternalNewsCard({ article }: { article: ExternalNews }) {
   return (
     <article className="flex flex-col rounded-xl border border-brand-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
-      <div className="mb-2 flex flex-wrap items-center gap-2">
-        <time
-          dateTime={article.publishedAt}
-          className="text-xs font-medium text-brand-500"
-        >
-          {formatDate(article.publishedAt)}
-        </time>
-        {article.discipline && <DisciplineBadge discipline={article.discipline} />}
-      </div>
+      <time
+        dateTime={article.publishedAt}
+        className="mb-2 text-xs font-medium text-brand-500"
+      >
+        {formatDate(article.publishedAt)}
+      </time>
       <h3 className="text-lg font-semibold leading-snug text-brand-950">
         <a
           href={article.url}

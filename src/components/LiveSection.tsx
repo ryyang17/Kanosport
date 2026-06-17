@@ -1,10 +1,9 @@
 import { ExternalLink, Radio } from "lucide-react";
 import type { MediaItem } from "@/data/types";
 import { ICF_CHANNEL_URL } from "@/lib/youtube";
-import DisciplineBadge from "./DisciplineBadge";
 
 // Toont de meest recente video van het officiële ICF-kanaal als "uitgelicht",
-// met een verwijzing naar de live-uitzendingen van wedstrijden op Planet Canoe.
+// met een verwijzing naar de live-uitzendingen van kanopolowedstrijden.
 export default function LiveSection({
   featured,
   isLive,
@@ -12,17 +11,38 @@ export default function LiveSection({
   featured: MediaItem | null;
   isLive: boolean;
 }) {
-  if (!featured) return null;
-
-  // Embed-URL omzetten naar een directe kijk-/embed-weergave.
-  const embedSrc = featured.src;
+  // Geen video beschikbaar → duidelijke placeholder tonen.
+  if (!featured) {
+    return (
+      <section className="mb-12 rounded-2xl border border-dashed border-brand-300 bg-brand-50 p-8 text-center">
+        <span className="inline-flex items-center gap-2 rounded-full bg-accent-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent-700">
+          <Radio className="h-3.5 w-3.5" aria-hidden="true" />
+          Live stream
+        </span>
+        <p className="mx-auto mt-4 max-w-xl text-sm text-brand-700">
+          Er is op dit moment geen live uitzending beschikbaar. Kanopolo­wedstrijden
+          worden meestal live uitgezonden via de organisatie van het toernooi en via
+          het officiële ICF-kanaal.
+        </p>
+        <a
+          href={ICF_CHANNEL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700"
+        >
+          Naar het ICF-kanaal (Planet Canoe)
+          <ExternalLink className="h-4 w-4" aria-hidden="true" />
+        </a>
+      </section>
+    );
+  }
 
   return (
     <section className="mb-12 overflow-hidden rounded-2xl border border-brand-100 bg-brand-950 text-white">
       <div className="grid gap-0 lg:grid-cols-2">
         <div className="relative aspect-video w-full bg-black">
           <iframe
-            src={embedSrc}
+            src={featured.src}
             title={featured.title}
             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -35,19 +55,13 @@ export default function LiveSection({
             {isLive ? "Nu live" : "Laatste video"} · Planet Canoe (ICF)
           </span>
           <h2 className="text-2xl font-bold leading-tight">{featured.title}</h2>
-          <div className="flex flex-wrap items-center gap-2">
-            {featured.discipline && (
-              <DisciplineBadge discipline={featured.discipline} />
-            )}
-            <span className="text-sm text-brand-300">
-              Officieel kanaal van de International Canoe Federation
-            </span>
-          </div>
           <p className="text-sm text-brand-200">
-            Echte beelden, automatisch opgehaald van het officiële ICF-kanaal.
-            Volledige live-uitzendingen van wereldbekers en WK&apos;s vind je op
-            het Planet Canoe-kanaal zelf.
+            Beelden van het officiële ICF-kanaal. Volledige live-uitzendingen van
+            EK&apos;s en WK&apos;s lopen via de organisatie van het toernooi en het
+            Planet Canoe-kanaal.
           </p>
+          {/* PLAATSHOUDER: vul hier een vaste kanopolo-livestream-URL in zodra die
+              beschikbaar is (bv. een YouTube-live van het toernooi). */}
           <a
             href={ICF_CHANNEL_URL}
             target="_blank"

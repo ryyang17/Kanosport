@@ -12,11 +12,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Kanosport Community — Kanopolo, Kanoslalom & Kanosprint",
-    template: "%s · Kanosport Community",
+    default: "Kanopolo Community — alles over kanopolo",
+    template: "%s · Kanopolo Community",
   },
   description:
-    "Het informatieplatform over de kanosportsoorten kanopolo, kanoslalom en kanosprint: nieuws, evenementen, verenigingen en meer.",
+    "Hét informatieplatform over kanopolo: wedstrijden, live streams en terugkijken, nieuws, blogs en sponsoring.",
 };
 
 export default function RootLayout({

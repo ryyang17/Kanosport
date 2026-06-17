@@ -1,4 +1,8 @@
-import type { Discipline } from "@/data/types";
+import type {
+  BlogCategory,
+  CompetitionLevel,
+  NewsCategory,
+} from "@/data/types";
 
 // Datum (ISO) naar leesbaar Nederlands formaat.
 export function formatDate(iso: string): string {
@@ -39,16 +43,27 @@ export function byDateAsc<T extends { date: string; time?: string }>(
   });
 }
 
-// Tailwind-klassen per discipline-accentkleur.
-export const disciplineBadgeClasses: Record<Discipline, string> = {
-  kanopolo: "bg-polo/10 text-polo ring-1 ring-inset ring-polo/30",
-  kanoslalom: "bg-slalom/10 text-slalom ring-1 ring-inset ring-slalom/30",
-  kanosprint: "bg-sprint/10 text-sprint ring-1 ring-inset ring-sprint/30",
+// Tailwind-klassen per nieuwscategorie-badge.
+export const newsCategoryClasses: Record<NewsCategory, string> = {
+  wedstrijden: "bg-accent-100 text-accent-700 ring-1 ring-inset ring-accent-300",
+  oranje: "bg-amber-100 text-amber-700 ring-1 ring-inset ring-amber-300",
+  verenigingen: "bg-brand-100 text-brand-700 ring-1 ring-inset ring-brand-300",
+  veiligheid: "bg-rose-100 text-rose-700 ring-1 ring-inset ring-rose-300",
+  internationaal: "bg-sky-100 text-sky-700 ring-1 ring-inset ring-sky-300",
 };
 
-// Tailwind-klassen per evenementtype-badge.
-export const eventTypeClasses: Record<string, string> = {
-  wedstrijd: "bg-accent-100 text-accent-700 ring-1 ring-inset ring-accent-300",
-  demonstratie: "bg-brand-100 text-brand-700 ring-1 ring-inset ring-brand-300",
-  clinic: "bg-amber-100 text-amber-700 ring-1 ring-inset ring-amber-300",
+// Tailwind-klassen per blogcategorie-badge.
+export const blogCategoryClasses: Record<BlogCategory, string> = {
+  materiaal: "bg-brand-100 text-brand-700 ring-1 ring-inset ring-brand-300",
+  techniek: "bg-emerald-100 text-emerald-700 ring-1 ring-inset ring-emerald-300",
+  achtergrond: "bg-violet-100 text-violet-700 ring-1 ring-inset ring-violet-300",
+  reviews: "bg-accent-100 text-accent-700 ring-1 ring-inset ring-accent-300",
+};
+
+// Tailwind-klassen per wedstrijdniveau. WK/EK krijgen een opvallende stijl.
+export const competitionLevelClasses: Record<CompetitionLevel, string> = {
+  WK: "bg-accent-500 text-white",
+  EK: "bg-brand-600 text-white",
+  NK: "bg-brand-100 text-brand-700 ring-1 ring-inset ring-brand-300",
+  toernooi: "bg-brand-50 text-brand-700 ring-1 ring-inset ring-brand-200",
 };

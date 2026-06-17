@@ -35,10 +35,8 @@ const config: Config = {
           800: "#9c1d0e",
           900: "#7e1b0f",
         },
-        // Discipline-accenten
+        // Kanopolo-accent
         polo: "#ec3406", // koraal/oranje
-        slalom: "#16a34a", // groen
-        sprint: "#7c3aed", // paars
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
