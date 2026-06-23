@@ -17,18 +17,16 @@ import CompetitionCard from "@/components/CompetitionCard";
 import YouTubeHighlight from "@/components/YouTubeHighlight";
 import PhotoCredit from "@/components/PhotoCredit";
 
-function nextCompetition(): Competition | null {
-  const upcoming = competitions
+function upcomingCompetitions(limit: number): Competition[] {
+  return competitions
     .filter((c) => c.status !== "afgelopen")
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  return upcoming[0] ?? null;
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .slice(0, limit);
 }
 
 export default function HomePage() {
   const latestNews = byNewest(news).slice(0, 3);
-  const volgende = nextCompetition();
-  // De korte "wat is kanopolo"-samenvatting (eerste twee secties).
-  const summary = kanopolo.sections.slice(0, 2);
+  const upcoming = upcomingCompetitions(3);
 
   return (
     <>
@@ -74,30 +72,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Algemene samenvatting van kanopolo */}
+      {/* Pakkende intro + overzicht aankomende wedstrijden */}
       <section className="container-page py-16">
         <div className="grid items-start gap-10 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
-              Wat is kanopolo?
+            <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">
+              De sport
+            </p>
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
+              Scoren vanaf het water
             </h2>
-            <p className="mt-3 text-lg leading-relaxed text-brand-800">
+            <p className="mt-4 text-lg leading-relaxed text-brand-800">
               {kanopolo.intro}
             </p>
-            <div className="mt-6 space-y-6">
-              {summary.map((section) => (
-                <div key={section.heading}>
-                  <h3 className="text-lg font-semibold text-brand-950">
-                    {section.heading}
-                  </h3>
-                  <div className="prose-body mt-2">
-                    {section.paragraphs.map((p, i) => (
-                      <p key={i}>{p}</p>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
           <figure className="relative aspect-[4/3] overflow-hidden rounded-xl border border-brand-100">
             <Image
@@ -110,6 +97,33 @@ export default function HomePage() {
             <PhotoCredit photo={kanopolo.galleryImage} overlay />
           </figure>
         </div>
+
+        {upcoming.length > 0 && (
+          <div className="mt-14">
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
+                  Aankomende wedstrijden
+                </h2>
+                <p className="mt-2 text-brand-700">
+                  Van NK en toernooien tot het EK — met livestreams en
+                  terugkijken.
+                </p>
+              </div>
+              <Link
+                href="/wedstrijden"
+                className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
+              >
+                Volledig schema <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {upcoming.map((competition) => (
+                <CompetitionCard key={competition.id} competition={competition} />
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Uitgelichte YouTube-highlight */}
@@ -126,44 +140,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Eerstvolgende wedstrijd + laatste nieuws */}
+      {/* Laatste nieuws */}
       <section className="container-page py-16">
-        <div className="grid gap-10 lg:grid-cols-3">
-          {volgende && (
-            <div className="lg:col-span-1">
-              <div className="mb-6 flex items-center justify-between gap-4">
-                <h2 className="text-2xl font-bold tracking-tight text-brand-950">
-                  Eerstvolgende wedstrijd
-                </h2>
-              </div>
-              <CompetitionCard competition={volgende} />
-              <Link
-                href="/wedstrijden"
-                className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900"
-              >
-                Volledig schema <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          )}
-
-          <div className={volgende ? "lg:col-span-2" : "lg:col-span-3"}>
-            <div className="mb-6 flex items-end justify-between gap-4">
-              <h2 className="text-2xl font-bold tracking-tight text-brand-950">
-                Laatste nieuws
-              </h2>
-              <Link
-                href="/nieuws"
-                className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
-              >
-                Alle nieuws & blogs <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {latestNews.map((article) => (
-                <NewsCard key={article.id} article={article} />
-              ))}
-            </div>
-          </div>
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <h2 className="text-2xl font-bold tracking-tight text-brand-950 sm:text-3xl">
+            Laatste nieuws
+          </h2>
+          <Link
+            href="/nieuws"
+            className="hidden shrink-0 items-center gap-1 text-sm font-semibold text-brand-700 hover:text-brand-900 sm:inline-flex"
+          >
+            Alle nieuws & blogs <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid gap-6 sm:grid-cols-3">
+          {latestNews.map((article) => (
+            <NewsCard key={article.id} article={article} />
+          ))}
         </div>
       </section>
 
